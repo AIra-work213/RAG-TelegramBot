@@ -1,3 +1,19 @@
-version: '1.0'
+version: '3.8'
 
 services:
+  chroma_server:
+    build: ./myDB
+    container_name: chroma_server
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/Chroma_db
+
+  app:
+    build: ./app
+    container_name: telegram_bot
+    depends_on:
+      - chroma_server
+
+volumes:
+  chroma_data:
