@@ -11,7 +11,7 @@ embed_func = HuggingFaceEmbeddings(
 )
 strainer = SoupStrainer(class_=("post-title", "post-header", "post-content"))
 loader = WebBaseLoader(
-    web_path=("",),
+    web_path=("https://www.wildberries.ru/catalog/tags/mercz-odezhda",),
     bs_kwargs={'parse_only': strainer}
 )
 docs = loader.load()
@@ -32,7 +32,7 @@ vector_db.add_documents(splitted_text)
 
 def add_to_db(url):
     loader = WebBaseLoader(
-    web_path=("",),
+    web_path=(url,),
     bs_kwargs={'parse_only': strainer}
     )
     docs = loader.load()
