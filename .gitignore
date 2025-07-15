@@ -1,2 +1,5 @@
 /venv
 .env
+__pycache__
+myDB/__pycache__
+Chroma_db
