@@ -1,6 +1,7 @@
 from telebot import TeleBot
 import os
 import requests
+import time
 
 bot_token = os.getenv("BOT_TOKEN")
 if not bot_token:
@@ -24,8 +25,14 @@ def search(message):
 
 def search_handler(message):
     query = message.text
-    response = requests.get(f"http://chroma_server:8000/search?query={query}")
-    bot.send_message(message.chat.id, str(response.json()))
+    for _ in range(5):
+        try:
+            response = requests.get(f"http://chroma_server:8000/search?query={query}")
+            bot.send_message(message.chat.id, str(response.json())[:4000])
+            return
+        except requests.exceptions.ConnectionError:
+            time.sleep(2)
+    bot.send_message(message.chat.id, "Сервис поиска временно недоступен. Попробуйте позже.")
 
 
 '''Добавление ссылки пользователя в векторную БД'''
@@ -36,7 +43,13 @@ def add(message):
 
 def add_handler(message):
     url = message.text
-    response = requests.post(f"http://chroma_server:8000/add?url={url}")
-    bot.send_message(message.chat.id, str(response.json()))
+    for _ in range(3):
+        try:
+            response = requests.post(f"http://chroma_server:8000/add?url={url}")
+            bot.send_message(message.chat.id, str(response.json()))
+            return
+        except requests.exceptions.ConnectionError:
+            time.sleep(2)
+    bot.send_message(message.chat.id, "Сервис добавления временно недоступен. Попробуйте позже.")
 
 bot.polling()
