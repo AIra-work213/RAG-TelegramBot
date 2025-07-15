@@ -8,12 +8,16 @@ services:
       - "8000:8000"
     volumes:
       - chroma_data:/Chroma_db
+    environment:
+      - USER_AGENT=Mozilla/5.0 (compatible; MyBot/1.0)
 
   app:
     build: ./app
     container_name: telegram_bot
     depends_on:
       - chroma_server
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
 
 volumes:
   chroma_data:
