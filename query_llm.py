@@ -26,14 +26,15 @@ vector_db = Chroma(
 
 def query_db(user_query):
     user_vector = embed_func.embed_query(user_query)
-    return vector_db.similarity_search_by_vector(user_vector, k=5)
+    docs = vector_db.similarity_search_by_vector(user_vector, k=5)
+    return [doc.page_content for doc in docs]
     
 
 """Серверная часть"""
 app = FastAPI()
 
-@app.get("/query")
-def query(query: str):
+@app.get("/search")
+def search(query: str):
     return query_db(query)
 
 @app.post("/add")
