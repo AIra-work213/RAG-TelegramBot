@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements_db.txt
 
 COPY . .
 
-CMD python3 chroma.py && python3 query_llm.py
+CMD ["python3", "query_llm.py"]
