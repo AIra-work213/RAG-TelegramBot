@@ -5,3 +5,4 @@ langchain-text-splitters
 langchain-chroma
 sentence-transformers
 beautifulsoup4
+langchain-huggingface
