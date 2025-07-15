@@ -29,3 +29,18 @@ vector_db = Chroma(
     persist_directory="/Chroma_db",
 )
 vector_db.add_documents(splitted_text)
+
+def add_to_db(url):
+    loader = WebBaseLoader(
+    web_path=("",),
+    bs_kwargs={'parse_only': strainer}
+    )
+    docs = loader.load()
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size = 1000,
+        chunk_overlap = 200,
+        add_start_index = True
+    )
+    splitted_text = text_splitter.split_documents(documents=docs)
+    vector_db.add_documents(splitted_text)
+    return "Успешно!"
