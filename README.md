@@ -1,5 +1,5 @@
 # RAG (Retrieval-Augmented Generation) система с Телеграмм ботом
-**Это пет-проект, предназначенный для обучения библиотекам langchain, FastAPI, beautifulsoup4 и другим, а также контейнеризации приложений с помощью Docker & Docker compose.**
+**Это пет-проект, предназначенный для обучения библиотекам langchain, FastAPI, beautifulsoup4 и другим, контейнеризации приложений с помощью Docker & Docker compose, а также векторным базам данных**
 ### Используемый стек:
     - Docker & Docker compose (compose.yml, Dockerfiles, Images, Containers, volumes, environments)
     - Python (Langchain, FastAPI, beautifulsoup4, telebot, langchain_chroma)
