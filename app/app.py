@@ -2,6 +2,22 @@ from telebot import TeleBot
 import os
 import requests
 import time
+from langchain_huggingface import HuggingFacePipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+
+
+tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B")
+model = AutoModelForCausalLM.from_pretrained("model_name")
+
+pipe = pipeline(
+    "text-generation",
+    model=model,
+    tokenizer=tokenizer,
+    max_new_tokens=256
+)
+
+llm = HuggingFacePipeline(pipeline=pipe)
+
 
 bot_token = os.getenv("BOT_TOKEN")
 if not bot_token:
@@ -29,7 +45,7 @@ def search_handler(message):
         try:
             response = requests.get(f"http://chroma_server:8000/search?query={query}")
             bot.send_message(message.chat.id, str(response.json())[:4000])
-            return
+            return 1
         except requests.exceptions.ConnectionError:
             time.sleep(2)
     bot.send_message(message.chat.id, "Сервис поиска временно недоступен. Попробуйте позже.")

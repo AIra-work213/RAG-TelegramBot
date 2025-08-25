@@ -7,12 +7,13 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 logging.info("Успешный импорт")
-
 embed_func = HuggingFaceEmbeddings(
     model_name="ai-forever/sbert_large_nlu_ru",
     model_kwargs={"device": "cpu"}
 )
 logging.info("Успешный импорт модели сбера")
+
+
 # Стрейнер для всех параграфов, заголовков и списков
 strainer = SoupStrainer(['article', 'main', 'section', 'div', 'p', 'h1', 'h2', 'h3', 'li'])
 loader = WebBaseLoader(
